@@ -8,6 +8,7 @@ const App = () => {
   useEffect(() => {
     const fetchData = async () => {
       const allRoutines = await callApi({ url: '/routines' });
+
       setRoutines(allRoutines);
     };
 
