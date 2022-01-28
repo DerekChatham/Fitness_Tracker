@@ -1,31 +1,58 @@
-import React, { useState, useEffect } from 'react';
-import { callApi } from '../api';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 
-const App = () => {
-  const [routines, setRoutines] = useState([]);
-  const [activities, setActivities] = useState([]);
+export default function App() {
+    return (
+    <Router>
+            <nav>
+                <Link to="/">Home</Link>
+                <Link to="/routines">Routines</Link>
+                <Link to="/activities">Activities</Link>
+                <Link to="/my_routines">My Routines</Link>
+                <Link to="/login_register">Login/Register</Link>
+            </nav>    
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const allRoutines = await callApi({ url: '/routines' });
+        <Routes>
+            <Route path='/' element={Home } />
+            <Route path='/routines' element={Routines } />
+            <Route path='/activities' element={Activities } />
+            <Route path='/myroutines' element={MyRoutines } />
+            <Route path='/login' element={LoginRegister } />
+        </Routes>
+    </Router>
+    );
+}
 
-      setRoutines(allRoutines);
-    };
-
-    fetchData();
-  }, []);
-  return (
-    <div>
-      <h1>Hello</h1>
-      {routines && routines.length
-        ? routines.map(({ id, name, goal, creatorName }) => (
-            <div key={id}>
-              {name} createdBy: {creatorName}
-            </div>
-          ))
-        : ''}
+function Home() {
+    return <div>
+        <h1>Welcome Home!</h1>
     </div>
-  );
-};
+}
+
+function Routines() {
+    return <div>
+        <h1>Routines!</h1>
+    </div>
+}
+
+function Activities() {
+    return <div>
+        <h1>Activities!</h1>
+    </div>
+}
+
+function MyRoutines() {
+    return <div>
+        <h1>My Routines!</h1>
+    </div>
+}
+
+function LoginRegister() {
+    return <div>
+        <h1>Login/Register Page!</h1>
+    </div>
+}
 
 export default App;

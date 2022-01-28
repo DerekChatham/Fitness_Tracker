@@ -1,7 +1,7 @@
 export const API_URL = 'https://fitnesstrac-kr.herokuapp.com/api/';
 
 export const callApi = async ({ url, method, token, body }) => {
-  //console.log('callApi: ', { url, method, token, body });
+  console.log('callApi: ', { url, method, token, body });
   try {
     const options = {
       method: method ? method.toUpperCase() : 'GET',
