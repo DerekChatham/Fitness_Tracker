@@ -5,15 +5,15 @@ function App() {
     return (
     <Router>
             <nav>
-                <NavLink to="/">Home</NavLink>
-                <NavLink to="/routines">Routines</NavLink>
-                <NavLink to="/activities">Activities</NavLink>
-                <NavLink to="/myroutines">My Routines</NavLink>
-                <NavLink to="/login">Login/Register</NavLink>
+                <Link to="/">Home</Link>
+                <Link to="/routines">Routines</Link>
+                <Link to="/activities">Activities</Link>
+                <Link to="/myroutines">My Routines</Link>
+                <Link to="/login">Login/Register</Link>
             </nav>    
 
-        
-            <Route path='/'><Home /></Route>
+            
+            <Route exact path='/'><Home /></Route>
             <Route path='/routines'><Routines /></Route>
             <Route path='/activities'><Activities /></Route>
             <Route path='/myroutines'><MyRoutines /></Route>
