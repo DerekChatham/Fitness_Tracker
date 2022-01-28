@@ -1,26 +1,24 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import React from 'react';
-import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Link, NavLink } from 'react-router-dom';
 
-export default function App() {
+function App() {
     return (
     <Router>
             <nav>
-                <Link to="/">Home</Link>
-                <Link to="/routines">Routines</Link>
-                <Link to="/activities">Activities</Link>
-                <Link to="/my_routines">My Routines</Link>
-                <Link to="/login_register">Login/Register</Link>
+                <NavLink to="/">Home</NavLink>
+                <NavLink to="/routines">Routines</NavLink>
+                <NavLink to="/activities">Activities</NavLink>
+                <NavLink to="/myroutines">My Routines</NavLink>
+                <NavLink to="/login">Login/Register</NavLink>
             </nav>    
 
-        <Routes>
-            <Route path='/' element={Home } />
-            <Route path='/routines' element={Routines } />
-            <Route path='/activities' element={Activities } />
-            <Route path='/myroutines' element={MyRoutines } />
-            <Route path='/login' element={LoginRegister } />
-        </Routes>
+        
+            <Route path='/'><Home /></Route>
+            <Route path='/routines'><Routines /></Route>
+            <Route path='/activities'><Activities /></Route>
+            <Route path='/myroutines'><MyRoutines /></Route>
+            <Route path='/login'><Login /></Route>
+    
     </Router>
     );
 }
@@ -49,7 +47,7 @@ function MyRoutines() {
     </div>
 }
 
-function LoginRegister() {
+function Login() {
     return <div>
         <h1>Login/Register Page!</h1>
     </div>
