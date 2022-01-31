@@ -1,3 +1,23 @@
 * {
     background-color: lightgray;
 }
+
+nav {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    font-size: 150%;
+    
+ 
+}
+
+.title {
+    display: flex;
+   color: brown;
+   font-size: 150%;
+   font-weight: bold;
+}
+
+a {
+    padding: 12px
+}

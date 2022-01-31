@@ -1,1 +1,9 @@
 export { default as App } from './App';
+export { default as LoginPage } from './LoginPage';
+export { default as Activities } from './Activities';
+export { default as Profile } from './Profile';
+export { default as SingleRoutine } from './SingleRoutine';
+export { default as Routines } from './Routines';
+export { default as NavBar } from './NavBar';
+export { default as MyRoutines } from './MyRoutines';
+export { default as RoutineDiv } from './RoutineDiv';

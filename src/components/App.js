@@ -1,56 +1,90 @@
-import React from 'react';
-import { BrowserRouter as Router, Route, Link, NavLink } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Route } from 'react-router-dom';
+import { callApi } from '../api';
+import { LoginPage, Activities, NavBar, SingleRoutine, Routines, Profile, MyRoutines, RoutineDiv } from './';
 
-function App() {
-    return (
-    <Router>
-            <nav>
-                <Link to="/">Home</Link>
-                <Link to="/routines">Routines</Link>
-                <Link to="/activities">Activities</Link>
-                <Link to="/myroutines">My Routines</Link>
-                <Link to="/login">Login/Register</Link>
-            </nav>    
+const App = () => {
+  const [token, setToken] = useState('');
+  const [routines, setRoutines] = useState([]);
+  const [activities, setActivities] = useState([]);
+  const [userData, setUserData] = useState({});
 
-            
-            <Route exact path='/'><Home /></Route>
-            <Route path='/routines'><Routines /></Route>
-            <Route path='/activities'><Activities /></Route>
-            <Route path='/myroutines'><MyRoutines /></Route>
-            <Route path='/login'><Login /></Route>
-    
-    </Router>
-    );
-}
+  const fetchUserData = async (token) => {
+    const data = await callApi({
+      url: '/users/me',
+      token,
+    });
+    console.log('USERDATA: ', data);
+    return data;
+  };
+  const fetchRoutines = async () => {
+    const routines = await callApi({ url: '/routines' });
+    console.log('ROUTINES: ', routines);
+    return routines;
+  };
+  const fetchActivities = async () => {
+    const activities = await callApi({ url: '/activities' });
+    console.log('ACTIVITIES: ', activities);
+    return activities;
+  };
 
-function Home() {
-    return <div>
-        <h1>Welcome Home!</h1>
-    </div>
-}
+  useEffect(() => {
+    const fetchData = async () => {
+      const routines = await fetchRoutines();
+      setRoutines(routines);
+      const activities = await fetchActivities();
+      setActivities(activities);
+      if (!token) {
+        setToken(localStorage.getItem('token'));
+        return;
+      }
+      const data = await fetchUserData(token);
+      if (data) {
+        setUserData(data);
+      }
+    };
+    fetchData();
+  }, [token]);
 
-function Routines() {
-    return <div>
-        <h1>Routines!</h1>
-    </div>
-}
+  return (
+    <>
+        <NavBar token={token} />
+        <Route exact path='/'>
+          FITNESS TRACKER HOME
 
-function Activities() {
-    return <div>
-        <h1>Activities!</h1>
-    </div>
-}
-
-function MyRoutines() {
-    return <div>
-        <h1>My Routines!</h1>
-    </div>
-}
-
-function Login() {
-    return <div>
-        <h1>Login/Register Page!</h1>
-    </div>
-}
+        </Route>
+        <Route path='/register'>
+          <LoginPage action='register' setToken={setToken} setUserData={setUserData} />
+        </Route>
+        <Route path='/login'>
+          {!token ? (
+            <LoginPage action='login' setToken={setToken} setUserData={setUserData} />
+          ) : (
+            <>
+              <div>You are already logged in!</div>
+              <br />
+            </>
+          )}
+        </Route>
+        <Route exact path='/routines'>
+          <Routines routines={routines} activities={activities} />
+        </Route>
+        <Route exact path='/activities'>
+          <Activities activities={activities} />
+        </Route>
+        <Route exact path='/profile'>
+          <Profile token={token} userData={userData} />
+        </Route>
+        <Route path='/routines/:routineId'>
+          <SingleRoutine routines={routines} token={token} userData={userData} />
+        </Route>
+        <Route exact path='/myroutines'>
+          <MyRoutines routines={routines} />
+        </Route>
+     
+      
+    </>
+  );
+};
 
 export default App;
